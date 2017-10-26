@@ -7,6 +7,9 @@ namespace LambdaEventAddRemove
     {
         private Timer _timer;
 
+        // UPD 1.デリゲートオブジェクト用の変数を宣言
+        private ElapsedEventHandler Elapsedhandler;
+
         /// <summary>
         /// コンストラクター
         /// </summary>
@@ -14,7 +17,13 @@ namespace LambdaEventAddRemove
         {
             _timer = new Timer();
             _timer.Interval = 500;
-            _timer.Elapsed += (s, e) => Console.WriteLine("Timer 500");
+            
+            //_timer.Elapsed +=(s, e) => Console.WriteLine("Timer 500");
+            //↓↓↓↓
+
+            // UPD 2.イベント処理（匿名メソッド）をデリゲートオブジェクト用の変数にセットし、その変数をイベントハンドラとして登録
+            Elapsedhandler = (s, e) => Console.WriteLine("Timer 500");
+            _timer.Elapsed += Elapsedhandler;
         }
 
         /// <summary>
@@ -24,6 +33,9 @@ namespace LambdaEventAddRemove
         {
             // 1.以下ではイベント購読解除できません。理由を説明してください。
             // _timer.Elapsed -= (s, e) => Console.WriteLine();
+
+            // A.上記匿名メソッドと登録したイベントハンドラは別物だから
+
 
             // 2.イベント購読解除を実装してください。
             //   ◆制限事項
@@ -37,6 +49,10 @@ namespace LambdaEventAddRemove
             //     　{
             //     　    Console.WriteLine("Timer 500");
             //     　}
+
+            
+            // UPD 3.デリゲートオブジェクト用の変数をイベントハンドラから解放
+            _timer.Elapsed -= Elapsedhandler;
         }
     }
 }

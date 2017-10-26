@@ -18,9 +18,6 @@ namespace LambdaEventAddRemove
             _timer = new Timer();
             _timer.Interval = 500;
             
-            //_timer.Elapsed +=(s, e) => Console.WriteLine("Timer 500");
-            //↓↓↓↓
-
             // UPD 2.イベント処理（匿名メソッド）をデリゲートオブジェクト用の変数にセットし、その変数をイベントハンドラとして登録
             Elapsedhandler = (s, e) => Console.WriteLine("Timer 500");
             _timer.Elapsed += Elapsedhandler;
